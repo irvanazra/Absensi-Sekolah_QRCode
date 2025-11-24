@@ -4,111 +4,136 @@ use App\Libraries\enums\TipeUser;
 switch ($type) {
    case TipeUser::Siswa:
 ?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <div class="d-flex align-items-center">
-        <i class="material-icons mr-2">check_circle</i>
-        <h4 class="alert-heading mb-0 text-dark">Absen <?= $waktu; ?> Berhasil!</h4>
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto">
+    <!-- Header Success -->
+    <div class="flex items-center justify-center mb-6">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+            <i class="material-icons text-green-500 text-3xl">check_circle</i>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800">Absen <?= $waktu; ?> Berhasil!</h2>
+            <p class="text-green-600 font-semibold">Siswa berhasil melakukan absensi</p>
+        </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card bg-light border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        Informasi Siswa
-                    </h5>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">Nama:</span>
-                            <span class="text-dark"><?= $data['nama_siswa']; ?></span>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">NIS:</span>
-                            <span class="text-dark"><?= $data['nis']; ?></span>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">Kelas:</span>
-                            <span class="text-dark"><?= $data['kelas'] . ' ' . $data['jurusan']; ?></span>
-                        </div>
-                    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Informasi Siswa -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-5 border border-blue-100">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center mr-3">
+                    <i class="material-icons text-white text-lg">person</i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">Informasi Siswa</h3>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-blue-100">
+                    <span class="font-semibold text-gray-700">Nama:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['nama_siswa']; ?></span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-blue-100">
+                    <span class="font-semibold text-gray-700">NIS:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['nis']; ?></span>
+                </div>
+                <div class="flex justify-between items-center py-2">
+                    <span class="font-semibold text-gray-700">Kelas:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['kelas'] . ' ' . $data['jurusan']; ?></span>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card bg-light border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        Waktu Absensi
-                    </h5>
-                    <?= jam($presensi); ?>
+
+        <!-- Waktu Absensi -->
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-100">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                    <i class="material-icons text-white text-lg">schedule</i>
                 </div>
+                <h3 class="text-lg font-bold text-gray-800">Waktu Absensi</h3>
             </div>
+            <?= jam($presensi); ?>
         </div>
     </div>
-    <div class="mt-3 text-center">
-        <small class="text-muted">
-            Notifikasi WhatsApp telah dikirim
-        </small>
+
+    <!-- Notifikasi WhatsApp -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+        <div class="flex items-center justify-center">
+            <i class="material-icons text-blue-500 mr-2">notifications</i>
+            <span class="text-blue-700 font-medium">Notifikasi WhatsApp telah dikirim ke orang tua</span>
+        </div>
     </div>
 </div>
 <?php break;
 
    case TipeUser::Guru:
 ?>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <div class="d-flex align-items-center">
-        <i class="material-icons mr-2">check_circle</i>
-        <h4 class="alert-heading mb-0 text-dark">Absen <?= $waktu; ?> Berhasil!</h4>
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto mt-4">
+    <!-- Header Success -->
+    <div class="flex items-center justify-center mb-6">
+        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+            <i class="material-icons text-green-500 text-3xl">check_circle</i>
+        </div>
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800">Absen <?= $waktu; ?> Berhasil!</h2>
+            <p class="text-green-600 font-semibold">Guru berhasil melakukan absensi</p>
+        </div>
     </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="card bg-light border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        Informasi Guru
-                    </h5>
-                    <div class="list-group list-group-flush">
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">Nama:</span>
-                            <span class="text-dark"><?= $data['nama_guru']; ?></span>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">NUPTK:</span>
-                            <span class="text-dark"><?= $data['nuptk']; ?></span>
-                        </div>
-                        <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-                            <span class="font-weight-bold text-dark">No HP:</span>
-                            <span class="text-dark"><?= $data['no_hp']; ?></span>
-                        </div>
-                    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        <!-- Informasi Guru -->
+        <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-5 border border-purple-100">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center mr-3">
+                    <i class="material-icons text-white text-lg">school</i>
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">Informasi Guru</h3>
+            </div>
+            
+            <div class="space-y-3">
+                <div class="flex justify-between items-center py-2 border-b border-purple-100">
+                    <span class="font-semibold text-gray-700">Nama:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['nama_guru']; ?></span>
+                </div>
+                <div class="flex justify-between items-center py-2 border-b border-purple-100">
+                    <span class="font-semibold text-gray-700">NUPTK:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['nuptk']; ?></span>
+                </div>
+                <div class="flex justify-between items-center py-2">
+                    <span class="font-semibold text-gray-700">No HP:</span>
+                    <span class="text-gray-900 font-medium"><?= $data['no_hp']; ?></span>
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="card bg-light border-0">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        Waktu Absensi
-                    </h5>
-                    <?= jam($presensi); ?>
+
+        <!-- Waktu Absensi -->
+        <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-100">
+            <div class="flex items-center mb-4">
+                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                    <i class="material-icons text-white text-lg">schedule</i>
                 </div>
+                <h3 class="text-lg font-bold text-gray-800">Waktu Absensi</h3>
             </div>
+            <?= jam($presensi); ?>
         </div>
     </div>
-    <div class="mt-3 text-center">
-        <small class="text-muted">
-            Notifikasi WhatsApp telah dikirim
-        </small>
+
+    <!-- Notifikasi WhatsApp -->
+    <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+        <div class="flex items-center justify-center">
+            <i class="material-icons text-blue-500 mr-2">notifications</i>
+            <span class="text-blue-700 font-medium">Notifikasi WhatsApp telah dikirim</span>
+        </div>
     </div>
 </div>
 <?php break;
 
    default:
 ?>
-<div class="alert alert-danger alert-dismissible fade show" role="alert">
-    <i class="material-icons mr-2">error</i>
-    <strong class="text-dark">Tipe tidak valid!</strong> Silahkan coba lagi.
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-md mx-auto text-center">
+    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i class="material-icons text-red-500 text-3xl">error</i>
+    </div>
+    <h3 class="text-xl font-bold text-gray-800 mb-2">Tipe tidak valid!</h3>
+    <p class="text-gray-600">Silahkan coba lagi</p>
 </div>
 <?php
       break;
@@ -117,14 +142,18 @@ switch ($type) {
 function jam($presensi)
 {
 ?>
-<div class="list-group list-group-flush">
-    <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-        <span class="font-weight-bold text-dark">Jam Masuk:</span>
-        <span class="badge badge-primary badge-pill"><?= $presensi['jam_masuk'] ?? '-'; ?></span>
+<div class="space-y-3">
+    <div class="flex justify-between items-center py-2 border-b border-green-100">
+        <span class="font-semibold text-gray-700">Jam Masuk:</span>
+        <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            <?= $presensi['jam_masuk'] ?? '-'; ?>
+        </span>
     </div>
-    <div class="list-group-item d-flex justify-content-between align-items-center bg-transparent px-0">
-        <span class="font-weight-bold text-dark">Jam Pulang:</span>
-        <span class="badge badge-info badge-pill"><?= $presensi['jam_keluar'] ?? '-'; ?></span>
+    <div class="flex justify-between items-center py-2">
+        <span class="font-semibold text-gray-700">Jam Pulang:</span>
+        <span class="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            <?= $presensi['jam_keluar'] ?? '-'; ?>
+        </span>
     </div>
 </div>
 <?php

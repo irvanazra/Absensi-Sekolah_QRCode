@@ -266,6 +266,61 @@
     font-weight: 300;
     line-height: 1.2;
 }
+
+/* SweetAlert2 Custom Styles */
+.swal2-popup {
+    border-radius: 1rem !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}
+
+.swal2-confirm {
+    border-radius: 0.75rem !important;
+    padding: 0.75rem 2rem !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.swal2-confirm:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Efek untuk update statistik */
+.highlight-update {
+    animation: pulse-update 1s ease-in-out;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
+}
+
+@keyframes pulse-update {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Scanner styles tetap sama */
+.scanner-container {
+    position: relative;
+    border: 2px solid #e3f2fd;
+    border-radius: 8px;
+    background: #f8f9fa;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scanner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
 </style>
 
 <script type="text/javascript" src="<?= base_url('assets/js/plugins/zxing/zxing.min.js') ?>"></script>
@@ -279,7 +334,7 @@
     $(document).ready(function() {
         console.log('Document ready, initializing scanner...');
         initScanner();
-        updateJam(); // Inisialisasi jam saat halaman dimuat
+        updateJam();
     });
 
     // Fungsi untuk update jam real-time
@@ -292,7 +347,6 @@
         const waktuString = `${jam}:${menit}:${detik}`;
         document.getElementById('jam').textContent = waktuString;
         
-        // Update tanggal jika perlu (sekali sehari)
         if (!window.tanggalDiperbarui || window.tanggalDiperbarui !== now.toDateString()) {
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             const tanggalString = now.toLocaleDateString('id-ID', options);
@@ -301,7 +355,6 @@
         }
     }
 
-    // Panggil updateJam setiap detik
     setInterval(updateJam, 1000);
 
     $(document).on('change', '#pilihKamera', function() {
@@ -312,27 +365,16 @@
        }
     });
 
-    const previewParent = document.getElementById('previewParent');
-    const preview = document.getElementById('previewKamera');
-
     function initScanner() {
        codeReader.listVideoInputDevices()
           .then(videoInputDevices => {
-             videoInputDevices.forEach(device =>
-                console.log(`${device.label}, ${device.deviceId}`)
-             );
-
              if (videoInputDevices.length < 1) {
                 alert("Camera not found!");
                 return;
              }
 
              if (selectedDeviceId == null) {
-                if (videoInputDevices.length <= 1) {
-                   selectedDeviceId = videoInputDevices[0].deviceId
-                } else {
-                   selectedDeviceId = videoInputDevices[1].deviceId
-                }
+                selectedDeviceId = videoInputDevices.length <= 1 ? videoInputDevices[0].deviceId : videoInputDevices[1].deviceId;
              }
 
              if (videoInputDevices.length >= 1) {
@@ -361,34 +403,27 @@
 
                    if (codeReader) {
                       codeReader.reset();
-
-                      // delay 2,5 detik setelah berhasil meng-scan
                       setTimeout(() => {
                          initScanner();
                       }, 2500);
                    }
                 })
                 .catch(err => console.error('QR Scan error:', err));
-
           })
           .catch(err => console.error('Camera access error:', err));
     }
 
     // Fungsi untuk update statistik
     function updateStatistik() {
-        console.log('Updating statistics...');
         jQuery.ajax({
             url: "<?= base_url('scan/statistik'); ?>",
             type: 'get',
             dataType: 'json',
             cache: false,
             success: function(response) {
-                console.log('Statistics received:', response);
-                // Update angka statistik
                 $('.bg-success-light h3').text(response.hadir);
                 $('.bg-warning-light h3').text(response.terlambat);
                 
-                // Tambahkan efek visual untuk menunjukkan update
                 $('.bg-success-light, .bg-warning-light').addClass('highlight-update');
                 setTimeout(function() {
                     $('.bg-success-light, .bg-warning-light').removeClass('highlight-update');
@@ -396,14 +431,11 @@
             },
             error: function(xhr, status, thrown) {
                 console.log('Failed to get statistics:', thrown);
-                console.log('XHR status:', xhr.status);
-                console.log('XHR response:', xhr.responseText);
             }
         });
     }
 
     async function cekData(code) {
-       console.log('Checking data for code:', code);
        jQuery.ajax({
           url: "<?= base_url('scan/cek'); ?>",
           type: 'post',
@@ -413,33 +445,74 @@
           },
           success: function(response, status, xhr) {
              audio.play();
-             console.log('Scan successful, response:', response);
-             $('#hasilScan').html(response);
+             
+             // Tampilkan SweetAlert2 dengan response
+             Swal.fire({
+                 html: response,
+                 width: 800,
+                 showCloseButton: true,
+                 showConfirmButton: true,
+                 confirmButtonText: 'Scan Lagi',
+                 confirmButtonColor: '#4CAF50',
+                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                 backdrop: 'rgba(0,0,0,0.4)',
+                 customClass: {
+                     popup: 'rounded-2xl shadow-2xl',
+                     confirmButton: 'px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300'
+                 },
+                 didOpen: () => {
+                     // Animasi masuk
+                     const popup = Swal.getPopup();
+                     popup.style.transform = 'scale(0.8)';
+                     popup.animate([
+                         { transform: 'scale(0.8)', opacity: 0 },
+                         { transform: 'scale(1)', opacity: 1 }
+                     ], {
+                         duration: 300,
+                         easing: 'ease-out'
+                     });
+                 }
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     // Lanjutkan scanning
+                     setTimeout(() => {
+                         initScanner();
+                     }, 500);
+                 }
+             });
 
-             // UPDATE STATISTIK SETELAH SCAN BERHASIL - DENGAN DELAY 500ms
+             // Update statistik
              setTimeout(function() {
                  updateStatistik();
-             }, 500);
-
-             $('html, body').animate({
-                scrollTop: $("#hasilScan").offset().top
              }, 500);
           },
           error: function(xhr, status, thrown) {
              console.log('Scan error:', thrown);
-             $('#hasilScan').html('<div class="alert alert-danger">Error: ' + thrown + '</div>');
+             
+             // Tampilkan error dengan SweetAlert2
+             Swal.fire({
+                 icon: 'error',
+                 title: 'Terjadi Kesalahan',
+                 text: 'Error: ' + thrown,
+                 confirmButtonText: 'Coba Lagi',
+                 confirmButtonColor: '#f44336',
+                 background: '#fff',
+                 customClass: {
+                     popup: 'rounded-2xl shadow-2xl'
+                 }
+             }).then((result) => {
+                 if (result.isConfirmed) {
+                     setTimeout(() => {
+                         initScanner();
+                     }, 500);
+                 }
+             });
           }
        });
     }
 
-    function clearData() {
-       $('#hasilScan').html('');
-    }
-
     // Update statistik secara periodik setiap 10 detik
     setInterval(updateStatistik, 10000);
-
-    // Panggil update statistik pertama kali saat halaman dimuat
     setTimeout(updateStatistik, 1000);
 </script>
 
