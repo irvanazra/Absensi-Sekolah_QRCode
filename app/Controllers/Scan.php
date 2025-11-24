@@ -66,12 +66,12 @@ class Scan extends BaseController
       // Hitung terlambat (asumsi: terlambat jika jam_masuk > 07:15:00)
       $totalTerlambatSiswa = $this->presensiSiswaModel
          ->where('tanggal', $today)
-         ->where('jam_masuk >', '07:15:00')
+         ->where('jam_masuk >', '06:30:00')
          ->countAllResults();
       
       $totalTerlambatGuru = $this->presensiGuruModel
          ->where('tanggal', $today)
-         ->where('jam_masuk >', '07:15:00')
+         ->where('jam_masuk >', '06:30:00')
          ->countAllResults();
       
       $totalTerlambat = $totalTerlambatSiswa + $totalTerlambatGuru;

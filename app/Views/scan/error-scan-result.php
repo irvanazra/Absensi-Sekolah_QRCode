@@ -1,7 +1,7 @@
 <?php
 use App\Libraries\enums\TipeUser;
 ?>
-<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto">
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto mt-4">
     <!-- Header Error -->
     <div class="flex items-center justify-center mb-6">
         <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mr-4">

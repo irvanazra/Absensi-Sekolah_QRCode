@@ -15,21 +15,23 @@
    <?= $this->include('templates/css'); ?>
    <title>Absensi QR Code</title>
    <style>
-        .bg {
-    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
-    opacity: 0.9;
-    background-size: cover;
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+      .bg {
+         background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
+         opacity: 0.9;
+         background-size: cover;
+         height: 100vh;
+         width: 100%;
+         position: absolute;
+         left: 0;
+         top: 0;
+      }
       .main-panel {
          position: relative;
          float: left;
          width: calc(100%);
          transition: 0.33s, cubic-bezier(0.685, 0.0473, 0.346, 1);
+         min-height: auto !important;
+         height: auto !important;
       }
 
       video#previewKamera {
@@ -53,6 +55,19 @@
 
       .form-select {
          min-width: 200px;
+      }
+      /* Hilangkan scroll global */
+      html, body {
+         overflow: hidden;
+         height: 100%;
+      }
+      .content {
+         padding: 0 !important;
+         margin-top: 70px; /* Untuk navbar fixed */
+      }
+
+      .container-fluid {
+         padding: 0 15px;
       }
    </style>
 </head>

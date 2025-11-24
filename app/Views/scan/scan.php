@@ -1,8 +1,8 @@
 <?= $this->extend('templates/starting_page_layout'); ?>
 
 <?= $this->section('navaction') ?>
-<a href="<?= base_url('/admin'); ?>" class="btn btn-primary pull-right pl-3">
-    <i class="material-icons mr-2">dashboard</i>
+<a href="<?= base_url('/admin'); ?>" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md transition-all duration-300 transform hover:-translate-y-1 ml-auto">
+    <i class="material-icons mr-2 text-white">dashboard</i>
     Dashboard
 </a>
 <?= $this->endSection() ?>
@@ -19,309 +19,107 @@
             <div class="row mx-auto">
                 <!-- Left Sidebar - Tips -->
                 <div class="col-lg-3 col-xl-4">
-                    <div class="card shadow-sm border-0">
-                        <div class="card-header bg-gradient-primary text-white">
-                            <h4 class="card-title mb-0"><b>Tips & Panduan</b></h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="alert alert-info">
-                                <strong>Panduan Scan:</strong>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="material-icons text-success mr-2">check_circle</i>
-                                    Tunjukkan QR code sampai terlihat jelas di kamera
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="material-icons text-success mr-2">check_circle</i>
-                                    Posisikan QR code tidak terlalu jauh maupun terlalu dekat
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <i class="material-icons text-success mr-2">check_circle</i>
-                                    Pastikan pencahayaan cukup untuk hasil terbaik
-                                </li>
-                            </ul>
-                        </div>
+                    <!-- Quick Stats - Vertikal dengan Tailwind -->
+<div class="card shadow-sm border-0">
+    <div class="card-header bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3">
+        <h4 class="card-title mb-0 flex items-center text-lg font-bold">
+            <i class="material-icons mr-2">bar_chart</i> 
+            Statistik Hari Ini
+        </h4>
+    </div>
+    <div class="card-body p-4">
+        <div class="flex flex-col space-y-4">
+            <!-- Hadir -->
+            <div class="text-center bg-green-50 rounded-xl p-4 border-2 border-green-200 shadow-md transition-all duration-300 hover:shadow-lg">
+                <div class="flex items-center justify-center mb-3">
+                    <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="material-icons text-white text-lg">check_circle</i>
                     </div>
-
-                    <!-- Quick Stats -->
-                    <div class="card shadow-sm border-0 mt-3">
-                        <div class="card-header bg-gradient-info text-white">
-                            <h4 class="card-title mb-0"><i class="material-icons mr-2">bar_chart</i> Statistik Hari Ini</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="row text-center">
-                                <div class="col-6">
-                                    <div class="p-2 bg-success-light rounded">
-                                        <h3 class="text-success mb-0"><?= $statistik['hadir']; ?></h3>
-                                        <small class="text-success">Hadir</small>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="p-2 bg-warning-light rounded">
-                                        <h3 class="text-warning mb-0"><?= $statistik['terlambat']; ?></h3>
-                                        <small class="text-warning">Terlambat</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-2 text-center">
-                                <small class="text-muted">Data diperbarui real-time</small>
-                            </div>
-                        </div>
+                    <h5 class="text-green-700 font-bold text-lg">Hadir</h5>
+                </div>
+                <div class="text-5xl font-bold text-green-600 mb-1"><?= $statistik['hadir']; ?></div>
+                <div class="text-green-500 font-medium">Orang</div>
+            </div>
+            
+            <!-- Terlambat -->
+            <div class="text-center bg-orange-50 rounded-xl p-4 border-2 border-orange-200 shadow-md transition-all duration-300 hover:shadow-lg">
+                <div class="flex items-center justify-center mb-3">
+                    <div class="w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center mr-3">
+                        <i class="material-icons text-white text-lg">schedule</i>
                     </div>
+                    <h5 class="text-orange-700 font-bold text-lg">Terlambat</h5>
+                </div>
+                <div class="text-5xl font-bold text-orange-600 mb-1"><?= $statistik['terlambat']; ?></div>
+                <div class="text-orange-500 font-medium">Orang</div>
+            </div>
+        </div>
+    </div>
+</div>
                 </div>
 
                 <!-- Main Scanner Area -->
-                <div class="col-lg-6 col-xl-4">
-                    <div class="card shadow-lg border-0">
-                        <div class="card-header bg-gradient-primary text-white">
-                            <div class="row align-items-center">
-                                <div class="col">
-                                    <h4 class="card-title mb-1"><b>Absen <?= $waktu; ?></b></h4>
-                                    <h6 class="card-title mb-0">Silahkan tunjukkan QR Code anda</h6>
-                                </div>
-                                <div class="col-md-auto">
-                                    <a href="<?= base_url("scan/$oppBtn"); ?>" 
-                                       class="btn btn-<?= $oppBtn == 'masuk' ? 'success' : 'warning'; ?> btn-sm">
-                                        <i class="material-icons mr-1">swap_horiz</i>
-                                        Absen <?= $oppBtn; ?>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="card-body">
-                            <!-- Camera Selection -->
-                            <div class="form-group mb-4">
-                                <label class="font-weight-bold">Pilih Kamera</label>
-                                <select id="pilihKamera" class="form-control">
-                                    <option selected>Pilih perangkat kamera...</option>
-                                </select>
-                            </div>
+                <div class="bg-white rounded-2xl shadow-xl border-0 overflow-hidden transition-all duration-300 hover:shadow-2xl">
+    <!-- Card Header -->
+    <div class="bg-gradient-to-r from-green-500 to-blue-600 text-white px-6 py-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+            <div class="mb-2 md:mb-0">
+                <h4 class="text-xl font-bold">Absen <?= $waktu; ?></h4>
+                <p class="text-blue-100 text-sm">Silahkan tunjukkan QR Code anda</p>
+            </div>
+            <div>
+                <a href="<?= base_url("scan/$oppBtn"); ?>" 
+                   class="inline-flex items-center px-4 py-2 rounded-lg text-white font-semibold shadow-md transition-all duration-300 transform hover:-translate-y-1 <?= $oppBtn == 'masuk' ? 'bg-green-500 hover:bg-green-600' : 'bg-yellow-500 hover:bg-yellow-600'; ?>">
+                    <i class="material-icons mr-2">swap_horiz</i>
+                    Absen <?= $oppBtn; ?>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Card Body -->
+    <div class="p-6">
+        <!-- Camera Selection -->
+        <div class="mb-6">
+            <label class="block text-gray-700 font-bold mb-2">Pilih Kamera</label>
+            <select id="pilihKamera" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300">
+                <option selected>Pilih perangkat kamera...</option>
+            </select>
+        </div>
 
-                            <!-- Scanner Preview -->
-                            <div class="scanner-container mb-4">
-                                <div class="scanner-overlay text-center py-4" id="searching">
-                                    <div class="spinner-border text-primary mb-2" role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    <h5 class="text-muted">Mencari QR Code...</h5>
-                                </div>
-                                <video id="previewKamera" class="w-100 rounded border" style="max-height: 310px; display: none;"></video>
-                            </div>
+        <!-- Scanner Preview -->
+        <div class="relative border-2 border-dashed border-blue-200 rounded-xl bg-gray-50 min-h-[300px] flex items-center justify-center mb-6 transition-all duration-300 hover:border-blue-300">
+            <div class="absolute inset-0 flex flex-col items-center justify-center z-10" id="searching">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+                <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
+            </div>
+            <video id="previewKamera" class="w-full rounded-lg max-h-[310px] hidden object-cover"></video>
+        </div>
 
-                            <!-- Scan Results -->
-                            <div id="hasilScan" class="mt-4"></div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Scan Results -->
+        <div id="hasilScan" class="mt-6"></div>
+    </div>
+</div>
 
-                <!-- Right Sidebar - Usage Guide -->
-                <!-- Right Sidebar - Usage Guide -->
 <div class="col-lg-3 col-xl-4">
     <!-- Jam Real-time -->
-    <div class="card shadow-sm border-0 mb-3">
-        <div class="card-header bg-gradient-success text-white">
-            <h4 class="card-title mb-0 text-center"><b>Jam Sekarang</b></h4>
+    <div class="bg-white rounded-xl shadow-md border-0 overflow-hidden mb-4 transition-all duration-300 hover:shadow-lg">
+    <div class="bg-gradient-to-r from-green-500 to-green-600 text-white py-3 px-4">
+        <h4 class="text-center font-bold text-lg">Jam Sekarang</h4>
+    </div>
+    <div class="p-6 text-center">
+        <div id="jam-realtime" class="font-mono text-4xl font-bold text-green-600 mb-3 tracking-wider">
+            <span id="jam">00:00:00</span>
         </div>
-        <div class="card-body text-center">
-            <div id="jam-realtime" class="display-4 font-weight-bold text-success mb-2">
-                <span id="jam">00:00:00</span>
-            </div>
-            <div id="tanggal" class="text-muted">
-                <?= date('d F Y'); ?>
-            </div>
+        <div id="tanggal" class="text-gray-500 font-medium">
+            <?= date('d F Y'); ?>
         </div>
     </div>
-
-    <!-- <div class="card shadow-sm border-0">
-        <div class="card-header bg-gradient-info text-white">
-            <h4 class="card-title mb-0"><b>Cara Penggunaan</b></h4>
-        </div>
-        <div class="card-body">
-            <div class="list-group list-group-flush">
-                <div class="list-group-item px-0">
-                    <div class="d-flex align-items-start">
-                        <i class="material-icons text-primary mr-2 mt-1">qr_code</i>
-                        <div>
-                            <h6 class="mb-1 text-primary">Scan QR Code</h6>
-                            <small class="text-muted">Arahkan kamera ke QR code siswa/guru</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0">
-                    <div class="d-flex align-items-start">
-                        <i class="material-icons text-success mr-2 mt-1">notifications</i>
-                        <div>
-                            <h6 class="mb-1 text-success">Notifikasi Otomatis</h6>
-                            <small class="text-muted">Notifikasi WhatsApp akan dikirim otomatis</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0">
-                    <div class="d-flex align-items-start">
-                        <i class="material-icons text-warning mr-2 mt-1">swap_horiz</i>
-                        <div>
-                            <h6 class="mb-1 text-warning">Ganti Waktu</h6>
-                            <small class="text-muted">Klik tombol untuk ganti waktu absensi</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="list-group-item px-0">
-                    <div class="d-flex align-items-start">
-                        <i class="material-icons text-info mr-2 mt-1">dashboard</i>
-                        <div>
-                            <h6 class="mb-1 text-info">Monitoring</h6>
-                            <small class="text-muted">Pantau data absensi di dashboard</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+</div>
 </div>
             </div>
         </div>
     </div>
 </div>
-
-<style>
-.scanner-container {
-    position: relative;
-    border: 2px solid #e3f2fd;
-    border-radius: 8px;
-    background: #f8f9fa;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.scanner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-
-.bg-success-light {
-    background-color: rgba(76, 175, 80, 0.1) !important;
-}
-
-.bg-warning-light {
-    background-color: rgba(255, 152, 0, 0.1) !important;
-}
-
-.bg-gradient-primary {
-    background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%) !important;
-}
-
-.bg-gradient-info {
-    background: linear-gradient(135deg, #00BCD4 0%, #3F51B5 100%) !important;
-}
-
-.card {
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: translateY(-2px);
-}
-
-.list-group-item {
-    border: none;
-    padding: 12px 0;
-}
-
-/* Efek untuk update statistik */
-.highlight-update {
-    animation: pulse-update 1s ease-in-out;
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
-}
-
-@keyframes pulse-update {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* Tambahkan di bagian CSS yang sudah ada */
-.bg-gradient-success {
-    background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%) !important;
-}
-
-#jam-realtime {
-    font-family: 'Courier New', monospace;
-    letter-spacing: 2px;
-}
-
-.display-4 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.2;
-}
-
-/* SweetAlert2 Custom Styles */
-.swal2-popup {
-    border-radius: 1rem !important;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
-}
-
-.swal2-confirm {
-    border-radius: 0.75rem !important;
-    padding: 0.75rem 2rem !important;
-    font-weight: 600 !important;
-    transition: all 0.3s ease !important;
-}
-
-.swal2-confirm:hover {
-    transform: translateY(-2px) !important;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Efek untuk update statistik */
-.highlight-update {
-    animation: pulse-update 1s ease-in-out;
-    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.3);
-}
-
-@keyframes pulse-update {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-/* Scanner styles tetap sama */
-.scanner-container {
-    position: relative;
-    border: 2px solid #e3f2fd;
-    border-radius: 8px;
-    background: #f8f9fa;
-    min-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.scanner-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
-}
-</style>
 
 <script type="text/javascript" src="<?= base_url('assets/js/plugins/zxing/zxing.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/core/jquery-3.5.1.min.js') ?>"></script>
@@ -369,6 +167,7 @@
        codeReader.listVideoInputDevices()
           .then(videoInputDevices => {
              if (videoInputDevices.length < 1) {
+                // Gunakan alert sederhana seperti kode lama
                 alert("Camera not found!");
                 return;
              }
@@ -390,17 +189,22 @@
                 })
              }
 
-             $('#previewKamera').show();
-             $('#searching').hide();
+             // Tampilkan video dan sembunyikan overlay - SEDERHANA seperti kode lama
+             $('#previewKamera').removeClass('hidden');
+             $('#searching').addClass('hidden');
 
              codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'previewKamera')
                 .then(result => {
                    console.log('QR Code detected:', result.text);
+                   
+                   // LANGSUNG proses data seperti kode lama
                    cekData(result.text);
 
-                   $('#previewKamera').hide();
-                   $('#searching').show();
+                   // Sembunyikan video dan tampilkan overlay
+                   $('#previewKamera').addClass('hidden');
+                   $('#searching').removeClass('hidden');
 
+                   // Reset dan delay 2.5 detik seperti kode lama
                    if (codeReader) {
                       codeReader.reset();
                       setTimeout(() => {
@@ -408,12 +212,21 @@
                       }, 2500);
                    }
                 })
-                .catch(err => console.error('QR Scan error:', err));
+                .catch(err => {
+                   console.error('QR Scan error:', err);
+                   // Auto restart sederhana seperti kode lama
+                   setTimeout(() => {
+                      initScanner();
+                   }, 1000);
+                });
           })
-          .catch(err => console.error('Camera access error:', err));
+          .catch(err => {
+             console.error('Camera access error:', err);
+             alert('Cannot access camera.');
+          });
     }
 
-    // Fungsi untuk update statistik
+    // Fungsi untuk update statistik - TETAP gunakan yang baru
     function updateStatistik() {
         jQuery.ajax({
             url: "<?= base_url('scan/statistik'); ?>",
@@ -421,13 +234,19 @@
             dataType: 'json',
             cache: false,
             success: function(response) {
-                $('.bg-success-light h3').text(response.hadir);
-                $('.bg-warning-light h3').text(response.terlambat);
+                const statHadir = document.querySelector('.bg-green-50 .text-5xl');
+                const statTerlambat = document.querySelector('.bg-orange-50 .text-5xl');
                 
-                $('.bg-success-light, .bg-warning-light').addClass('highlight-update');
-                setTimeout(function() {
-                    $('.bg-success-light, .bg-warning-light').removeClass('highlight-update');
-                }, 1000);
+                if (statHadir) statHadir.textContent = response.hadir;
+                if (statTerlambat) statTerlambat.textContent = response.terlambat;
+
+                const statsCards = document.querySelectorAll('.bg-green-50, .bg-orange-50');
+                statsCards.forEach(card => {
+                    card.classList.add('animate-pulse', 'ring-2');
+                    setTimeout(function() {
+                        card.classList.remove('animate-pulse', 'ring-2');
+                    }, 1000);
+                });
             },
             error: function(xhr, status, thrown) {
                 console.log('Failed to get statistics:', thrown);
@@ -436,6 +255,12 @@
     }
 
     async function cekData(code) {
+       // Tampilkan loading state
+       $('#searching').html(`
+           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+           <h5 class="text-gray-600 font-medium">Memproses QR Code...</h5>
+       `);
+
        jQuery.ajax({
           url: "<?= base_url('scan/cek'); ?>",
           type: 'post',
@@ -453,32 +278,16 @@
                  showCloseButton: true,
                  showConfirmButton: true,
                  confirmButtonText: 'Scan Lagi',
-                 confirmButtonColor: '#4CAF50',
-                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                 backdrop: 'rgba(0,0,0,0.4)',
-                 customClass: {
-                     popup: 'rounded-2xl shadow-2xl',
-                     confirmButton: 'px-6 py-3 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300'
-                 },
-                 didOpen: () => {
-                     // Animasi masuk
-                     const popup = Swal.getPopup();
-                     popup.style.transform = 'scale(0.8)';
-                     popup.animate([
-                         { transform: 'scale(0.8)', opacity: 0 },
-                         { transform: 'scale(1)', opacity: 1 }
-                     ], {
-                         duration: 300,
-                         easing: 'ease-out'
-                     });
-                 }
+                 confirmButtonColor: '#10B981'
              }).then((result) => {
-                 if (result.isConfirmed) {
-                     // Lanjutkan scanning
-                     setTimeout(() => {
-                         initScanner();
-                     }, 500);
-                 }
+                 // Reset ke state awal
+                 $('#searching').html(`
+                     <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+                     <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
+                 `);
+                 
+                 // Scanner akan restart otomatis dari initScanner setelah 2.5 detik
+                 // Tidak perlu memanggil initScanner() di sini
              });
 
              // Update statistik
@@ -489,23 +298,21 @@
           error: function(xhr, status, thrown) {
              console.log('Scan error:', thrown);
              
-             // Tampilkan error dengan SweetAlert2
+             // Reset ke state awal
+             $('#searching').html(`
+                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+                 <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
+             `);
+             
              Swal.fire({
                  icon: 'error',
                  title: 'Terjadi Kesalahan',
                  text: 'Error: ' + thrown,
                  confirmButtonText: 'Coba Lagi',
-                 confirmButtonColor: '#f44336',
-                 background: '#fff',
-                 customClass: {
-                     popup: 'rounded-2xl shadow-2xl'
-                 }
+                 confirmButtonColor: '#EF4444'
              }).then((result) => {
-                 if (result.isConfirmed) {
-                     setTimeout(() => {
-                         initScanner();
-                     }, 500);
-                 }
+                 // Scanner akan restart otomatis dari initScanner setelah 2.5 detik
+                 // Tidak perlu memanggil initScanner() di sini
              });
           }
        });

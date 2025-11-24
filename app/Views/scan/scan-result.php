@@ -4,7 +4,7 @@ use App\Libraries\enums\TipeUser;
 switch ($type) {
    case TipeUser::Siswa:
 ?>
-<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto">
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto mt-4">
     <!-- Header Success -->
     <div class="flex items-center justify-center mb-6">
         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
@@ -66,7 +66,7 @@ switch ($type) {
 
    case TipeUser::Guru:
 ?>
-<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto mt-4">
+<div class="bg-white rounded-2xl p-6 shadow-2xl max-w-4xl mx-auto">
     <!-- Header Success -->
     <div class="flex items-center justify-center mb-6">
         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
