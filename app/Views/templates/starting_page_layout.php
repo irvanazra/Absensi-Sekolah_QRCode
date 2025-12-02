@@ -15,16 +15,7 @@
    <?= $this->include('templates/css'); ?>
    <title>Absensi QR Code</title>
    <style>
-      .bg {
-         background: linear-gradient(135deg, #4CAF50 0%, #2196F3 100%);
-         opacity: 0.9;
-         background-size: cover;
-         height: 100vh;
-         width: 100%;
-         position: absolute;
-         left: 0;
-         top: 0;
-      }
+      /* HAPUS CSS .bg karena sudah diganti dengan Tailwind di bawah */
       .main-panel {
          position: relative;
          float: left;
@@ -72,24 +63,34 @@
    </style>
 </head>
 
-<body class="bg-gray-50">
-   <div class="bg bg-image"></div>
-   <!-- Navbar -->
-   <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top">
-      <div class="container-fluid">
-         <div class="navbar-wrapper row w-100">
-            <div class="col-6">
-               <p class="navbar-brand"><b><?= $title ?? 'Login'; ?></b></p>
+<body class="bg-gray-50 overflow-hidden h-full">
+   <!-- GANTI .bg dengan Tailwind -->
+   <div class="absolute inset-0 bg-gradient-to-br from-green-400 to-blue-500 opacity-90 z-0"></div>
+   
+   <!-- Navbar Modern dengan Tailwind CSS -->
+   <nav class="bg-gradient-to-r from-blue-600 to-green-600 shadow-lg fixed top-0 left-0 right-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div class="flex justify-between items-center h-16">
+            <!-- Logo dan Judul -->
+            <div class="flex items-center space-x-3">
+               <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-md">
+                  <i class="material-icons text-blue-600">qr_code_scanner</i>
+               </div>
+               <div>
+                  <h1 class="text-white font-bold text-xl">Sistem Absensi Digital</h1>
+                  <p class="text-blue-100 text-xs">SMK Negeri 1 Example</p>
+               </div>
             </div>
-            <div class="col-6 d-flex justify-content-end">
+            
+            <!-- Navigation Actions -->
+            <div class="flex items-center space-x-4">
                <?= $this->renderSection('navaction') ?>
             </div>
          </div>
       </div>
    </nav>
-   <!-- End Navbar -->
+   
    <?= $this->renderSection('content') ?>
    <?= $this->include('templates/js'); ?>
 </body>
-
 </html>

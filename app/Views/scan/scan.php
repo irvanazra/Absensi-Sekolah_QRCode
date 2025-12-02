@@ -204,12 +204,12 @@
                    $('#previewKamera').addClass('hidden');
                    $('#searching').removeClass('hidden');
 
-                   // Reset dan delay 2.5 detik seperti kode lama
+                   // Reset dan delay 1.5 detik seperti kode lama
                    if (codeReader) {
                       codeReader.reset();
                       setTimeout(() => {
                          initScanner();
-                      }, 2500);
+                      }, 1500);
                    }
                 })
                 .catch(err => {
@@ -255,68 +255,90 @@
     }
 
     async function cekData(code) {
-       // Tampilkan loading state
-       $('#searching').html(`
-           <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
-           <h5 class="text-gray-600 font-medium">Memproses QR Code...</h5>
-       `);
+   // Tampilkan loading state
+   $('#searching').html(`
+       <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+       <h5 class="text-gray-600 font-medium">Memproses QR Code...</h5>
+   `);
 
-       jQuery.ajax({
-          url: "<?= base_url('scan/cek'); ?>",
-          type: 'post',
-          data: {
-             'unique_code': code,
-             'waktu': '<?= strtolower($waktu); ?>'
-          },
-          success: function(response, status, xhr) {
-             audio.play();
-             
-             // Tampilkan SweetAlert2 dengan response
-             Swal.fire({
-                 html: response,
-                 width: 800,
-                 showCloseButton: true,
-                 showConfirmButton: true,
-                 confirmButtonText: 'Scan Lagi',
-                 confirmButtonColor: '#10B981'
-             }).then((result) => {
+   jQuery.ajax({
+      url: "<?= base_url('scan/cek'); ?>",
+      type: 'post',
+      data: {
+         'unique_code': code,
+         'waktu': '<?= strtolower($waktu); ?>'
+      },
+      success: function(response, status, xhr) {
+         audio.play();
+         
+         // Tampilkan SweetAlert2 dengan timer auto close
+         Swal.fire({
+             html: response,
+             width: 800,
+             showCloseButton: false,
+             showConfirmButton: false,
+             timer: 1500, // Auto close setelah 2 detik
+             timerProgressBar: true,
+             position: 'top',
+             allowOutsideClick: false,
+             allowEscapeKey: false,
+             didOpen: () => {
+                 // Update statistik
+                 setTimeout(function() {
+                     updateStatistik();
+                 }, 500);
+             },
+             willClose: () => {
                  // Reset ke state awal
                  $('#searching').html(`
                      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
                      <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
                  `);
                  
-                 // Scanner akan restart otomatis dari initScanner setelah 2.5 detik
-                 // Tidak perlu memanggil initScanner() di sini
-             });
-
-             // Update statistik
-             setTimeout(function() {
-                 updateStatistik();
-             }, 500);
-          },
-          error: function(xhr, status, thrown) {
-             console.log('Scan error:', thrown);
-             
-             // Reset ke state awal
-             $('#searching').html(`
-                 <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
-                 <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
-             `);
-             
-             Swal.fire({
-                 icon: 'error',
-                 title: 'Terjadi Kesalahan',
-                 text: 'Error: ' + thrown,
-                 confirmButtonText: 'Coba Lagi',
-                 confirmButtonColor: '#EF4444'
-             }).then((result) => {
-                 // Scanner akan restart otomatis dari initScanner setelah 2.5 detik
-                 // Tidak perlu memanggil initScanner() di sini
-             });
-          }
-       });
-    }
+                 // Restart scanner setelah notifikasi tertutup
+                 setTimeout(() => {
+                     if (codeReader) {
+                         codeReader.reset();
+                         initScanner();
+                     }
+                 }, 500);
+             }
+         });
+      },
+      error: function(xhr, status, thrown) {
+         console.log('Scan error:', thrown);
+         
+         // Reset ke state awal
+         $('#searching').html(`
+             <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mb-4"></div>
+             <h5 class="text-gray-500 font-medium">Mencari QR Code...</h5>
+         `);
+         
+         // Tampilkan error dengan timer auto close
+         Swal.fire({
+             icon: 'error',
+             title: 'Terjadi Kesalahan',
+             text: 'Error: ' + thrown,
+             showConfirmButton: false,
+             showCloseButton: false,
+             timer: 1500, // Auto close setelah 2 detik
+             timerProgressBar: true,
+             position: 'top',
+             allowOutsideClick: false,
+             allowEscapeKey: false,
+             willClose: () => {
+                 // Restart scanner setelah error tertutup
+                 setTimeout(() => {
+                     if (codeReader) {
+                         codeReader.reset();
+                         initScanner();
+                     }
+                 }, 500);
+             }
+         });
+      }
+   });
+}
 
     // Update statistik secara periodik setiap 10 detik
     setInterval(updateStatistik, 10000);
